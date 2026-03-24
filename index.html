@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CyberSafe — Digital Safety for Schools</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&family=Figtree:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+
+/* ── TOKENS ─────────────────────────────── */
+:root {
+  --ink:       #1a1a18;
+  --ink-2:     #3d3d38;
+  --ink-3:     #7a7a72;
+  --paper:     #f5f2eb;
+  --paper-2:   #edeae0;
+  --paper-3:   #e4e0d4;
+  --signal:    #c8320a;
+  --safe:      #1a5c3a;
+  --link:      #1a3a5c;
+  --rule:      rgba(26,26,24,0.12);
+  --mono: 'IBM Plex Mono', monospace;
+  --serif: 'Libre Baskerville', Georgia, serif;
+  --sans: 'Figtree', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+
+body {
+  font-family: var(--sans);
+  background: var(--paper);
+  color: var(--ink);
+  overflow-x: hidden;
+}
+
+h1,h2,h3,h4 { font-family: var(--serif); line-height: 1.2; }
+.mono { font-family: var(--mono); }
+
+/* ── HEADER ─────────────────────────────── */
+header {
+  border-bottom: 2px solid var(--ink);
+  background: var(--paper);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.9rem 3rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.wordmark {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: var(--ink);
+}
+.wordmark-main {
+  font-family: var(--serif);
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.wordmark-tag {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  color: var(--ink-3);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1px solid var(--rule);
+  padding: 0.15rem 0.45rem;
+  border-radius: 2px;
+}
+
+nav { display: flex; }
+nav a {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  text-decoration: none;
+  padding: 0.55rem 1.2rem;
+  border-right: 1px solid var(--rule);
+  transition: background 0.15s, color 0.15s;
+}
+nav a:first-child { border-left: 1px solid var(--rule); }
+nav a:hover { background: var(--ink); color: var(--paper); }
+
+.nav-live {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.05em;
+  color: var(--signal);
+}
+.pulse-dot {
+  width: 6px; height: 6px;
+  background: var(--signal);
+  border-radius: 50%;
+  animation: blink 1.8s ease-in-out infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.15} }
+
+/* ── HERO ────────────────────────────────── */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-bottom: 2px solid var(--ink);
+  min-height: 86vh;
+}
+
+.hero-left {
+  padding: 5rem 3.5rem 4rem;
+  border-right: 2px solid var(--ink);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.issue-line {
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 3rem;
+}
+
+.hero-h1 {
+  font-size: clamp(3.2rem, 6.5vw, 5.8rem);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  margin-bottom: 2rem;
+}
+.hero-h1 em { font-style: italic; color: var(--signal); }
+
+.hero-desc {
+  font-size: 1.05rem;
+  color: var(--ink-2);
+  line-height: 1.75;
+  font-weight: 300;
+  max-width: 400px;
+  margin-bottom: 3rem;
+}
+
+.hero-btns { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+
+.btn {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 0.8rem 1.6rem;
+  transition: all 0.15s;
+  cursor: pointer;
+  border: none;
+  line-height: 1;
+}
+.btn-dark { background: var(--ink); color: var(--paper); }
+.btn-dark:hover { background: var(--ink-2); }
+.btn-outline { background: transparent; color: var(--ink); border: 1.5px solid var(--ink); }
+.btn-outline:hover { background: var(--ink); color: var(--paper); }
+
+.scroll-hint {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  color: var(--ink-3);
+}
+
+.hero-right { display: flex; flex-direction: column; }
+
+.stat-block {
+  flex: 1;
+  padding: 2.5rem 3rem;
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.stat-block:last-child { border-bottom: none; }
+
+.stat-n {
+  font-family: var(--serif);
+  font-size: clamp(2.8rem, 4.5vw, 4.2rem);
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+.stat-n.red { color: var(--signal); }
+.stat-n.grn { color: var(--safe); }
+
+.stat-lbl { font-size: 0.85rem; color: var(--ink-2); line-height: 1.55; font-weight: 300; }
+.stat-src { font-family: var(--mono); font-size: 0.58rem; color: var(--ink-3); margin-top: 0.6rem; letter-spacing: 0.04em; }
+
+/* ── SECTION CHROME ──────────────────────── */
+.sec-hd {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 3rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--ink);
+}
+.sec-num { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; color: var(--ink-3); }
+.sec-title { font-family: var(--serif); font-size: clamp(1.7rem, 3vw, 2.5rem); font-weight: 700; letter-spacing: -0.02em; }
+
+/* ── LEARN ───────────────────────────────── */
+#learn { padding: 5rem 3rem; border-bottom: 2px solid var(--ink); }
+
+.aud-grid {
+  display: grid;
+  grid-template-columns: 190px 1fr;
+  border: 1.5px solid var(--ink);
+}
+
+.aud-nav { border-right: 1.5px solid var(--ink); }
+
+.aud-nav-btn {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 1.5rem;
+  border-bottom: 1px solid var(--rule);
+  cursor: pointer;
+  transition: background 0.15s;
+  color: var(--ink);
+}
+.aud-nav-btn:last-child { border-bottom: none; }
+.aud-nav-btn:hover { background: var(--paper-2); }
+.aud-nav-btn.active { background: var(--ink); color: var(--paper); }
+
+.aud-sub { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.5; margin-bottom: 0.3rem; }
+.aud-name { font-family: var(--serif); font-size: 1rem; font-weight: 700; }
+
+.aud-pane { display: none; }
+.aud-pane.active { display: block; padding: 2rem 2.5rem; animation: fadein 0.25s ease; }
+
+.tip-row { display: flex; gap: 0; border-bottom: 1px solid var(--rule); }
+.tip-row:last-child { border-bottom: none; }
+
+.tip-num { font-family: var(--mono); font-size: 0.62rem; color: var(--ink-3); width: 2.2rem; padding-top: 1.4rem; flex-shrink: 0; letter-spacing: 0.05em; }
+.tip-body-wrap { flex: 1; padding: 1.25rem 1rem 1.25rem 0; }
+.tip-title { font-family: var(--serif); font-size: 0.95rem; font-weight: 700; margin-bottom: 0.3rem; }
+.tip-copy { font-size: 0.85rem; color: var(--ink-2); line-height: 1.65; font-weight: 300; }
+.tip-tag-col { padding-top: 1.4rem; flex-shrink: 0; }
+
+.pip {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.5rem;
+}
+.pip-hi { background: var(--signal); color: #fff; }
+.pip-md { background: var(--ink-2); color: var(--paper); }
+.pip-lo { background: var(--paper-3); color: var(--ink-2); }
+
+/* ── THREATS ─────────────────────────────── */
+#threats { padding: 5rem 3rem; background: var(--paper-2); border-bottom: 2px solid var(--ink); }
+
+.threats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 1.5px solid var(--ink);
+}
+
+.t-card {
+  padding: 2rem;
+  border-right: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  cursor: pointer;
+  transition: background 0.15s;
+  position: relative;
+}
+.t-card:nth-child(2n)   { border-right: none; }
+.t-card:nth-last-child(-n+2) { border-bottom: none; }
+.t-card:hover  { background: var(--paper-3); }
+.t-card.open   { background: var(--ink); color: var(--paper); }
+
+.t-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.8rem; }
+.t-id { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em; opacity: 0.4; }
+.t-risk { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.18rem 0.5rem; }
+.risk-h { background: var(--signal); color: #fff; }
+.risk-m { background: var(--ink-2); color: #fff; }
+.t-card.open .risk-m { background: rgba(255,255,255,0.15); color: #fff; }
+
+.t-name { font-family: var(--serif); font-size: 1.15rem; font-weight: 700; margin-bottom: 0.45rem; line-height: 1.25; }
+.t-teaser { font-size: 0.82rem; opacity: 0.6; line-height: 1.55; font-weight: 300; }
+
+.t-expand {
+  display: none;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255,255,255,0.12);
+  font-size: 0.83rem;
+  line-height: 1.72;
+  font-weight: 300;
+  opacity: 0.88;
+}
+.t-card:not(.open) .t-expand { border-top-color: var(--rule); }
+.t-card.open .t-expand { display: block; }
+
+.t-cta {
+  position: absolute;
+  bottom: 1.1rem;
+  right: 1.4rem;
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  opacity: 0.35;
+}
+
+/* ── QUIZ ────────────────────────────────── */
+#quiz { padding: 5rem 3rem; border-bottom: 2px solid var(--ink); }
+
+.quiz-shell {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  border: 1.5px solid var(--ink);
+  min-height: 400px;
+}
+
+.quiz-body { padding: 2.5rem; border-right: 1.5px solid var(--ink); }
+.quiz-side { padding: 2rem; background: var(--paper-2); display: flex; flex-direction: column; gap: 1.2rem; }
+
+.q-label { font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.1em; color: var(--ink-3); text-transform: uppercase; margin-bottom: 1rem; }
+.q-text  { font-family: var(--serif); font-size: 1.12rem; line-height: 1.55; margin-bottom: 2rem; font-weight: 400; }
+
+.q-opts { display: flex; flex-direction: column; gap: 0.45rem; margin-bottom: 1.4rem; }
+
+.q-opt {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  border: 1.5px solid var(--rule);
+  cursor: pointer;
+  background: var(--paper);
+  font-family: var(--sans);
+  font-size: 0.87rem;
+  color: var(--ink);
+  text-align: left;
+  transition: border-color 0.15s, background 0.15s;
+  line-height: 1.5;
+}
+.q-opt:hover:not(:disabled) { border-color: var(--ink); background: var(--paper-2); }
+.q-opt.correct { border-color: var(--safe); background: rgba(26,92,58,0.07); color: var(--safe); }
+.q-opt.wrong   { border-color: var(--signal); background: rgba(200,50,10,0.06); color: var(--signal); }
+
+.q-let { font-family: var(--mono); font-size: 0.68rem; opacity: 0.38; flex-shrink: 0; padding-top: 0.1rem; }
+.q-opt.correct .q-let, .q-opt.wrong .q-let { opacity: 1; }
+
+.q-fb {
+  display: none;
+  padding: 0.75rem 1rem;
+  font-size: 0.82rem;
+  line-height: 1.6;
+  border-left: 3px solid transparent;
+  margin-bottom: 1.2rem;
+}
+.q-fb.show { display: block; }
+.q-fb.ok  { border-color: var(--safe); background: rgba(26,92,58,0.06); color: var(--safe); }
+.q-fb.err { border-color: var(--signal); background: rgba(200,50,10,0.05); color: var(--signal); }
+
+.q-track-lbl { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); }
+
+.q-track { display: flex; flex-direction: column; gap: 0.3rem; }
+.q-dot {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  padding: 0.45rem 0.6rem;
+  border-left: 2px solid var(--rule);
+  color: var(--ink-3);
+  letter-spacing: 0.04em;
+  transition: all 0.2s;
+}
+.q-dot.done  { border-color: var(--safe); color: var(--safe); }
+.q-dot.err   { border-color: var(--signal); color: var(--signal); }
+.q-dot.cur   { border-color: var(--ink); color: var(--ink); font-weight: 500; }
+
+.quiz-result { display: none; }
+.quiz-result.show { display: flex; flex-direction: column; justify-content: center; min-height: 280px; animation: fadein 0.3s ease; }
+.r-score { font-family: var(--serif); font-size: 5.5rem; font-weight: 700; line-height: 1; }
+.r-score sup { font-size: 2rem; color: var(--ink-3); vertical-align: super; }
+.r-lbl { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3); margin: 0.5rem 0 0.75rem; }
+.r-msg { font-size: 0.92rem; color: var(--ink-2); line-height: 1.65; margin-bottom: 2rem; }
+
+/* ── RESOURCES ───────────────────────────── */
+#resources { padding: 5rem 3rem; background: var(--paper-2); border-bottom: 2px solid var(--ink); }
+
+.res-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border: 1.5px solid var(--ink);
+}
+
+.res-card {
+  padding: 1.8rem;
+  border-right: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  transition: background 0.15s;
+}
+.res-card:nth-child(3n) { border-right: none; }
+.res-card:nth-last-child(-n+3) { border-bottom: none; }
+.res-card:hover { background: var(--paper-3); }
+
+.res-cat { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 0.75rem; }
+.res-name { font-family: var(--serif); font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; line-height: 1.3; }
+.res-desc { font-size: 0.83rem; color: var(--ink-2); line-height: 1.6; font-weight: 300; }
+.res-url  { display: block; margin-top: 1rem; font-family: var(--mono); font-size: 0.63rem; letter-spacing: 0.04em; color: var(--link); text-decoration: underline; text-underline-offset: 3px; }
+
+/* ── EMERGENCY ───────────────────────────── */
+.emergency {
+  background: var(--signal);
+  color: #fff;
+  padding: 1.5rem 3rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 2.5rem;
+}
+.emg-label { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase; flex-shrink: 0; border-right: 1px solid rgba(255,255,255,0.3); padding-right: 2.5rem; padding-top: 0.1rem; opacity: 0.9; }
+.emg-text  { font-size: 0.87rem; line-height: 1.65; opacity: 0.95; }
+
+/* ── FOOTER ──────────────────────────────── */
+footer {
+  padding: 2rem 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 2px solid var(--ink);
+}
+.foot-name { font-family: var(--serif); font-size: 0.95rem; font-weight: 700; }
+.foot-note { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.05em; color: var(--ink-3); }
+
+/* ── ANIMATION ───────────────────────────── */
+@keyframes fadein { from{opacity:0} to{opacity:1} }
+
+.reveal { opacity: 0; transform: translateY(14px); transition: opacity 0.5s ease, transform 0.5s ease; }
+.reveal.in { opacity: 1; transform: translateY(0); }
+
+/* ── RESPONSIVE ──────────────────────────── */
+@media(max-width:860px) {
+  .hero { grid-template-columns: 1fr; min-height: auto; }
+  .hero-right { display: none; }
+  .hero-left { border-right: none; padding: 3.5rem 1.5rem 2.5rem; }
+  .header-top { padding: 0.75rem 1.2rem; }
+  nav { display: none; }
+  #learn, #threats, #quiz, #resources { padding: 3.5rem 1.2rem; }
+  .aud-grid { grid-template-columns: 1fr; }
+  .aud-nav { display: flex; border-right: none; border-bottom: 1.5px solid var(--ink); overflow-x: auto; }
+  .aud-nav-btn { border-bottom: none; border-right: 1px solid var(--rule); flex-shrink: 0; }
+  .threats-grid { grid-template-columns: 1fr; }
+  .t-card { border-right: none !important; }
+  .t-card:nth-last-child(-n+2) { border-bottom: 1px solid var(--rule) !important; }
+  .t-card:last-child { border-bottom: none !important; }
+  .quiz-shell { grid-template-columns: 1fr; }
+  .quiz-side { display: none; }
+  .quiz-body { border-right: none; }
+  .res-grid { grid-template-columns: 1fr; }
+  .res-card { border-right: none !important; }
+  .res-card:nth-last-child(-n+3) { border-bottom: 1px solid var(--rule) !important; }
+  .res-card:last-child { border-bottom: none !important; }
+  .emergency { padding: 1.2rem; gap: 1rem; flex-direction: column; }
+  .emg-label { border-right: none; border-bottom: 1px solid rgba(255,255,255,.25); padding-right: 0; padding-bottom: 0.75rem; }
+  footer { flex-direction: column; gap: 0.5rem; text-align: center; padding: 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <a class="wordmark" href="#">
+      <span class="wordmark-main">CyberSafe</span>
+      <span class="wordmark-tag">Digital Safety for Schools</span>
+    </a>
+    <nav>
+      <a href="#learn">Learn</a>
+      <a href="#threats">Threats</a>
+      <a href="#quiz">Quiz</a>
+      <a href="#resources">Resources</a>
+    </nav>
+    <div class="nav-live">
+      <div class="pulse-dot"></div>
+      Free resource
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="issue-line mono">Cybersecurity Education — Students · Parents · Teachers</div>
+    <div>
+      <h1 class="hero-h1">The internet<br>is <em>powerful.</em><br>So are you.</h1>
+      <p class="hero-desc">Practical, plain-language guidance on staying safe online. No jargon. No scare tactics. Just what you actually need to know.</p>
+      <div class="hero-btns">
+        <a href="#learn" class="btn btn-dark">Start learning</a>
+        <a href="#quiz" class="btn btn-outline">Take the quiz</a>
+      </div>
+    </div>
+    <div class="scroll-hint mono">Scroll to explore ↓</div>
+  </div>
+  <div class="hero-right">
+    <div class="stat-block">
+      <div class="stat-n red">1 in 3</div>
+      <div class="stat-lbl">children experience cyberbullying at some point during their school years</div>
+      <div class="stat-src mono">— Cyberbullying Research Center</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-n">3.4B</div>
+      <div class="stat-lbl">phishing emails are sent every single day worldwide</div>
+      <div class="stat-src mono">— Valimail Security Report</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-n grn">2 min</div>
+      <div class="stat-lbl">is all it takes to enable two-factor authentication and meaningfully improve account security</div>
+      <div class="stat-src mono">— CISA Guidance</div>
+    </div>
+  </div>
+</section>
+
+<!-- LEARN -->
+<section id="learn">
+  <div class="sec-hd reveal">
+    <span class="sec-num mono">01 —</span>
+    <h2 class="sec-title">Essential Safety Tips</h2>
+  </div>
+  <div class="aud-grid reveal">
+    <div class="aud-nav">
+      <div class="aud-nav-btn active" onclick="switchAud('students',this)">
+        <span class="aud-sub">Section A</span>
+        <span class="aud-name">Students</span>
+      </div>
+      <div class="aud-nav-btn" onclick="switchAud('parents',this)">
+        <span class="aud-sub">Section B</span>
+        <span class="aud-name">Parents</span>
+      </div>
+      <div class="aud-nav-btn" onclick="switchAud('teachers',this)">
+        <span class="aud-sub">Section C</span>
+        <span class="aud-name">Teachers</span>
+      </div>
+    </div>
+
+    <div class="aud-pane active" id="aud-students">
+      <div class="tip-row"><span class="tip-num mono">01</span><div class="tip-body-wrap"><div class="tip-title">Use strong, unique passwords</div><div class="tip-copy">At least 12 characters mixing letters, numbers, and symbols. Never reuse passwords — one breach cascades to all. Consider a free password manager like Bitwarden.</div></div><div class="tip-tag-col"><span class="pip pip-hi">Critical</span></div></div>
+      <div class="tip-row"><span class="tip-num mono">02</span><div class="tip-body-wrap"><div class="tip-title">Think before you click anything</div><div class="tip-copy">Phishing links mimic real sites with tiny spelling differences. If a message arrives unexpectedly, hover before clicking — or go directly to the official website instead.</div></div><div class="tip-tag-col"><span class="pip pip-hi">Critical</span></div></div>
+      <div class="tip-row"><span class="tip-num mono">03</span><div class="tip-body-wrap"><div class="tip-title">Keep personal details personal</div><div class="tip-copy">Full name, school, address, phone, and photos should never be shared with people you only know online — even in games. Real friends don't need this to stay in touch.</div></div><div class="tip-tag-col"><span class="pip pip-hi">Critical</span></div></div>
+      <div class="tip-row"><span class="tip-num mono">04</span><div class="tip-body-wrap"><div class="tip-title">Know how to report cyberbullying</div><div class="tip-copy">Screenshot everything. Tell a trusted adult. Report to the platform. You never have to respond — block and step away. You are not alone, and it is not your fault.</div></div><div class="tip-tag-col"><span class="pip pip-md">Important</span></div></div>
+      <div class="tip-row"><span class="tip-num mono">05</span><div class="tip-body-wrap"><div class="tip-title">Audit app permissions regularly</div><div class="tip-copy">Does a puzzle game really need your contacts and location? Go to your phone settings and revoke access that isn't genuinely necessary.</div></div><div class="tip-tag-col"><span class="pip pip-lo">Habit</span></div></div>
+      <div class="tip-row"><span class="tip-num mono">06</span><div class="tip-body-wrap"><div class="tip-title">Understand what incognito mode does</div><div class="tip-copy">It prevents local history from saving. It does not hide you from your school's network, your internet provider, or the websites you visit.</div></div><div class="tip-tag-col"><span class="pip pip-lo">Habit</span></div></div>
+    </div>
+
+    <div class="aud-pane" id="aud-parents">
+      <div class="tip-row"><span class="tip-num mono">01</span><div class="tip-body-wrap"><div class="tip-title">Create space for open conversations</div><div class="tip-copy">Ask what apps and games your child uses — with genuine curiosity, not interrogation. Make it safe for them to tell you when something feels wrong online, without fear of device removal as the first response.</div></div><div class="tip-tag-col"><span class="pip pip-hi">Critical</span></div></div>
+      <div class="tip-row"><span class="tip-num mono">02</span><div class="tip-body-wrap"><div class="tip-title">Set up parental controls thoughtfully</div><div class="tip-copy">Tools like Google Family Link, Apple Screen Time, and Circle help manage content and schedules. Explain the rules — controls work best alongside trust, not instead of it.</div></div><div class="tip-tag-col"><span class="pip pip-hi">Critical</span></div></div>
+      <div class="tip-row"><span class="tip-num mono">03</span><div class="tip-body-wrap"><div class="tip-title">Review privacy settings together</div><div class="tip-copy">Go through your child's social media accounts with them. Set profiles to private, disable location sharing, and explain why these settings matter.</div></div><div class="tip-tag-col"><span class="pip pip-md">Important</span></div></div>
+      <div class="tip-row"><span class="tip-num mono">04</span><div class="tip-body-wrap"><div class="tip-title">Establish consistent device boundaries</div><div class="tip-copy">No devices at meals, charge phones outside the bedroom overnight. Consistent routines protect sleep and mental health, and make rules feel less arbitrary to children.</div></div><div class="tip-tag-col"><span class="pip pip-md">Important</span></div></div>
+      <div class="tip-row"><span class="tip-num mono">05</span><div class="tip-body-wrap"><div class="tip-title">Secure your home network</div><div class="tip-copy">Change the default router password. Use WPA3 encryption. Create a separate guest network for smart home devices, isolated from family devices.</div></div><div class="tip-tag-col"><span class="pip pip-md">Important</span></div></div>
+      <div class="tip-row"><span class="tip-num mono">06</span><div class="tip-body-wrap"><div class="tip-title">Learn alongside your child</div><div class="tip-copy">You don't need to be an expert. Exploring new apps or games together signals curiosity rather than surveillance — and makes you the person they'll come to when something goes wrong.</div></div><div class="tip-tag-col"><span class="pip pip-lo">Habit</span></div></div>
+    </div>
+
+    <div class="aud-pane" id="aud-teachers">
+      <div class="tip-row"><span class="tip-num mono">01</span><div class="tip-body-wrap"><div class="tip-title">Weave digital literacy into existing subjects</div><div class="tip-copy">Source evaluation in English, data privacy in math, algorithmic bias in social studies. Cybersecurity doesn't need to be isolated — the best teaching happens in context.</div></div><div class="tip-tag-col"><span class="pip pip-hi">Critical</span></div></div>
+      <div class="tip-row"><span class="tip-num mono">02</span><div class="tip-body-wrap"><div class="tip-title">Know the behavioral warning signs</div><div class="tip-copy">Withdrawal from usual activities, visible anxiety around devices, or sudden mood changes after screen time may signal cyberbullying or online exploitation. Act early.</div></div><div class="tip-tag-col"><span class="pip pip-hi">Critical</span></div></div>
+      <div class="tip-row"><span class="tip-num mono">03</span><div class="tip-body-wrap"><div class="tip-title">Vet tools before using student data</div><div class="tip-copy">Verify apps comply with FERPA and COPPA before use. Never share student information in unencrypted emails or personal cloud storage. The burden of proof is on the vendor.</div></div><div class="tip-tag-col"><span class="pip pip-hi">Critical</span></div></div>
+      <div class="tip-row"><span class="tip-num mono">04</span><div class="tip-body-wrap"><div class="tip-title">Use simulation-based learning</div><div class="tip-copy">Platforms like Google's Interland, Common Sense Media curricula, and CISA's K-12 toolkit make concepts concrete. Students retain what they experience, not just what they read.</div></div><div class="tip-tag-col"><span class="pip pip-md">Important</span></div></div>
+      <div class="tip-row"><span class="tip-num mono">05</span><div class="tip-body-wrap"><div class="tip-title">Write clear classroom policies</div><div class="tip-copy">Document expectations around device use, AI-assisted work, and communication platforms. Share them with students and parents at the start of each year.</div></div><div class="tip-tag-col"><span class="pip pip-md">Important</span></div></div>
+      <div class="tip-row"><span class="tip-num mono">06</span><div class="tip-body-wrap"><div class="tip-title">Partner with families</div><div class="tip-copy">Host a parent information session early in the year. Shared expectations between school and home are far more effective than either working in isolation.</div></div><div class="tip-tag-col"><span class="pip pip-lo">Habit</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- THREATS -->
+<section id="threats">
+  <div class="sec-hd reveal">
+    <span class="sec-num mono">02 —</span>
+    <h2 class="sec-title">Common Online Threats</h2>
+  </div>
+  <div class="threats-grid reveal">
+    <div class="t-card" onclick="toggleT(this)">
+      <div class="t-top"><span class="t-id mono">T-01</span><span class="t-risk risk-h">High</span></div>
+      <div class="t-name">Phishing Attacks</div>
+      <div class="t-teaser">Fraudulent messages that impersonate trusted sources to steal credentials or financial data.</div>
+      <div class="t-expand">Phishing messages mimic banks, schools, or popular apps — often using urgent language and subtle domain errors (yourbank-secure.info). Never click links in unexpected messages. Go directly to the official website. Enable two-factor authentication so that even a stolen password won't be enough.</div>
+      <div class="t-cta mono">Tap to read more</div>
+    </div>
+    <div class="t-card" onclick="toggleT(this)">
+      <div class="t-top"><span class="t-id mono">T-02</span><span class="t-risk risk-h">High</span></div>
+      <div class="t-name">Cyberbullying</div>
+      <div class="t-teaser">Harassment, threats, or exclusion carried out through digital platforms and devices.</div>
+      <div class="t-expand">Cyberbullying happens on social media, in games, via text, or in group chats. It is as psychologically damaging as in-person bullying. If it occurs: document with screenshots, block the person, and report to a trusted adult and the platform. Do not respond to the bully — that typically escalates the situation.</div>
+      <div class="t-cta mono">Tap to read more</div>
+    </div>
+    <div class="t-card" onclick="toggleT(this)">
+      <div class="t-top"><span class="t-id mono">T-03</span><span class="t-risk risk-h">High</span></div>
+      <div class="t-name">Malware & Ransomware</div>
+      <div class="t-teaser">Malicious software designed to steal data, surveil users, or hold files hostage for payment.</div>
+      <div class="t-expand">Malware typically arrives via pirated downloads, email attachments, or misleading ads. Ransomware encrypts your files and demands payment. Defenses: keep your OS updated, use reputable antivirus software, only download apps from official stores, and back up important files regularly to an external drive.</div>
+      <div class="t-cta mono">Tap to read more</div>
+    </div>
+    <div class="t-card" onclick="toggleT(this)">
+      <div class="t-top"><span class="t-id mono">T-04</span><span class="t-risk risk-h">High</span></div>
+      <div class="t-name">Online Grooming</div>
+      <div class="t-teaser">Adults who build manipulative trust with minors in games, social platforms, or messaging apps.</div>
+      <div class="t-expand">Warning signs: an online contact wanting to move to a private channel, requesting photos, showing unusual interest in a child's personal life, or suggesting meeting in person. Children should know they can tell a trusted adult without getting in trouble. Parents should review communication apps periodically and keep devices in shared spaces.</div>
+      <div class="t-cta mono">Tap to read more</div>
+    </div>
+    <div class="t-card" onclick="toggleT(this)">
+      <div class="t-top"><span class="t-id mono">T-05</span><span class="t-risk risk-m">Medium</span></div>
+      <div class="t-name">Data Breaches</div>
+      <div class="t-teaser">Exposure of personal information when services you use are compromised by attackers.</div>
+      <div class="t-expand">Even reputable companies get breached. Your email, password, or payment details may be circulating without your knowledge. Check exposure at haveibeenpwned.com. Use unique passwords per site so one breach doesn't cascade into many. Enable 2FA on email and financial accounts as a first priority.</div>
+      <div class="t-cta mono">Tap to read more</div>
+    </div>
+    <div class="t-card" onclick="toggleT(this)">
+      <div class="t-top"><span class="t-id mono">T-06</span><span class="t-risk risk-m">Medium</span></div>
+      <div class="t-name">Misinformation & Deepfakes</div>
+      <div class="t-teaser">AI-generated images, video, and text designed to deceive or attribute false statements to real people.</div>
+      <div class="t-expand">Modern AI generates convincing fakes. Before sharing shocking content, check the original source, look for image artifacts (especially hands and teeth), and use fact-checking resources like Snopes, AP Fact Check, or PolitiFact. Slow down — the impulse to share quickly is exactly what misinformation depends on.</div>
+      <div class="t-cta mono">Tap to read more</div>
+    </div>
+  </div>
+</section>
+
+<!-- QUIZ -->
+<section id="quiz">
+  <div class="sec-hd reveal">
+    <span class="sec-num mono">03 —</span>
+    <h2 class="sec-title">Knowledge Check</h2>
+  </div>
+  <div class="quiz-shell reveal">
+    <div class="quiz-body">
+      <div id="quizActive">
+        <div class="q-label mono" id="qLabel">Question 1 of 5</div>
+        <div class="q-text" id="qText"></div>
+        <div class="q-opts" id="qOpts"></div>
+        <div class="q-fb" id="qFb"></div>
+        <button class="btn btn-dark" id="qNext" onclick="nextQ()" disabled>Next question →</button>
+      </div>
+      <div class="quiz-result" id="quizResult">
+        <div class="r-score" id="rScore"></div>
+        <div class="r-lbl mono" id="rLbl"></div>
+        <p class="r-msg" id="rMsg"></p>
+        <button class="btn btn-outline" onclick="restartQ()">Retake quiz</button>
+      </div>
+    </div>
+    <div class="quiz-side">
+      <div class="q-track-lbl">Progress</div>
+      <div class="q-track" id="qTrack"></div>
+      <div style="margin-top:auto; padding-top:1.5rem; border-top:1px solid var(--rule);">
+        <p style="font-family:var(--mono);font-size:0.6rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-3);margin-bottom:0.6rem;">About this quiz</p>
+        <p style="font-size:0.8rem;color:var(--ink-3);line-height:1.65;font-weight:300;">Five questions covering the scenarios you're most likely to encounter. Suitable for all ages and experience levels.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESOURCES -->
+<section id="resources">
+  <div class="sec-hd reveal">
+    <span class="sec-num mono">04 —</span>
+    <h2 class="sec-title">Trusted Resources</h2>
+  </div>
+  <div class="res-grid reveal">
+    <div class="res-card">
+      <div class="res-cat mono">Students</div>
+      <div class="res-name">Google Be Internet Awesome</div>
+      <div class="res-desc">Curriculum and interactive game (Interland) teaching privacy, security, kindness, and critical thinking online.</div>
+      <span class="res-url">beinternetawesome.withgoogle.com</span>
+    </div>
+    <div class="res-card">
+      <div class="res-cat mono">Parents</div>
+      <div class="res-name">Common Sense Media</div>
+      <div class="res-desc">Expert reviews of apps, games, and shows with detailed guidance on age-appropriateness and privacy practices.</div>
+      <span class="res-url">commonsensemedia.org</span>
+    </div>
+    <div class="res-card">
+      <div class="res-cat mono">Teachers</div>
+      <div class="res-name">CISA K–12 Cybersecurity</div>
+      <div class="res-desc">Free toolkits, lesson plans, and incident response guides from the U.S. Cybersecurity & Infrastructure Security Agency.</div>
+      <span class="res-url">cisa.gov/k-12-schools</span>
+    </div>
+    <div class="res-card">
+      <div class="res-cat mono">All ages — Passwords</div>
+      <div class="res-name">Have I Been Pwned?</div>
+      <div class="res-desc">Check whether your email or phone number appeared in a known data breach. Free, trusted, independently operated.</div>
+      <span class="res-url">haveibeenpwned.com</span>
+    </div>
+    <div class="res-card">
+      <div class="res-cat mono">All ages</div>
+      <div class="res-name">StaySafeOnline — NCSA</div>
+      <div class="res-desc">Plain-language guides, toolkits, and awareness resources from the National Cybersecurity Alliance for every audience.</div>
+      <span class="res-url">staysafeonline.org</span>
+    </div>
+    <div class="res-card">
+      <div class="res-cat mono">Bullying</div>
+      <div class="res-name">Cyberbullying Research Center</div>
+      <div class="res-desc">Research, real stories, state laws, and prevention strategies including a guide for reporting to platforms and authorities.</div>
+      <span class="res-url">cyberbullying.org</span>
+    </div>
+  </div>
+</section>
+
+<!-- EMERGENCY -->
+<div class="emergency">
+  <div class="emg-label mono">⚠ Need help now?</div>
+  <div class="emg-text">If you or someone you know is being threatened or exploited online, contact the <strong>National Center for Missing &amp; Exploited Children</strong> at 1-800-843-5678, report to the <strong>FBI's IC3</strong> at ic3.gov, or call <strong>911</strong> in any emergency. School counselors are also trained for these situations — you don't have to handle it alone.</div>
+</div>
+
+<footer>
+  <div class="foot-name">CyberSafe — Digital Safety for Schools</div>
+  <div class="foot-note mono">Educational resource. Not a substitute for professional or legal advice.</div>
+</footer>
+
+<script>
+/* scroll reveal */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }});
+}, {threshold: 0.07});
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* audience tabs */
+function switchAud(id, btn) {
+  document.querySelectorAll('.aud-nav-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.aud-pane').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('aud-' + id).classList.add('active');
+}
+
+/* threats */
+function toggleT(el) {
+  const wasOpen = el.classList.contains('open');
+  document.querySelectorAll('.t-card').forEach(c => { c.classList.remove('open'); c.querySelector('.t-cta').textContent = 'Tap to read more'; });
+  if (!wasOpen) { el.classList.add('open'); el.querySelector('.t-cta').textContent = 'Tap to collapse'; }
+}
+
+/* quiz */
+const Qs = [
+  { q: "You get an email from 'account-verify.yourbank.secure-login.com' asking you to confirm your password. What do you do?",
+    opts: ["Click the link — it looks official", "Reply asking if it's real", "Delete it and go to your bank's website directly", "Forward it to a friend to check"],
+    ans: 2, why: "Phishing domains hide in subdomains. 'yourbank' appearing anywhere in the URL doesn't make it legitimate. Always navigate directly to the official address." },
+  { q: "Which of these is the strongest password?",
+    opts: ["sunshine2024", "TigerMoon!92x#", "password123", "MyDog_Buddy"],
+    ans: 1, why: "A strong password is 12+ characters, mixes cases, numbers, and symbols, and avoids dictionary words or personal details that can be guessed." },
+  { q: "Someone you met in an online game is asking what school you go to and what neighborhood you live in. What do you do?",
+    opts: ["Tell them — it's just a game", "Only share your school name", "Refuse to answer and tell a trusted adult", "Give made-up information"],
+    ans: 2, why: "Location details should never be shared with online strangers. This is a recognized warning sign — tell a trusted adult." },
+  { q: "What does two-factor authentication (2FA) protect against?",
+    opts: ["Slow internet connections", "Someone logging in with a stolen password", "Viruses already on your device", "Receiving spam emails"],
+    ans: 1, why: "2FA requires a second verification step — like a code sent to your phone — so a stolen password alone can't access your account." },
+  { q: "You see classmates sending mean messages to another student in a group chat. What's the most effective first step?",
+    opts: ["React with an emoji to blend in", "Leave the group quietly", "Screenshot the evidence and tell a trusted adult", "Message the bully directly to stop"],
+    ans: 2, why: "Evidence is essential. Document with screenshots and report to a trusted adult or school official. Engaging the bully directly can escalate the situation." }
+];
+
+const letters = ['A','B','C','D'];
+let cur = 0, score = 0, answered = false, mistakes = [];
+
+function buildTrack() {
+  const t = document.getElementById('qTrack'); t.innerHTML = '';
+  Qs.forEach((_, i) => {
+    const d = document.createElement('div');
+    const isDone = i < cur;
+    const isCur  = i === cur;
+    const isErr  = mistakes.includes(i);
+    d.className = 'q-dot' + (isCur ? ' cur' : isDone && !isErr ? ' done' : isDone && isErr ? ' err' : '');
+    d.textContent = `Question ${i+1}`;
+    t.appendChild(d);
+  });
+}
+
+function loadQ() {
+  answered = false;
+  const q = Qs[cur];
+  document.getElementById('qLabel').textContent = `Question ${cur+1} of ${Qs.length}`;
+  document.getElementById('qText').textContent = q.q;
+  const opts = document.getElementById('qOpts'); opts.innerHTML = '';
+  q.opts.forEach((o, i) => {
+    const b = document.createElement('button');
+    b.className = 'q-opt';
+    b.innerHTML = `<span class="q-let">${letters[i]}</span>${o}`;
+    b.onclick = () => pick(i, b);
+    opts.appendChild(b);
+  });
+  const fb = document.getElementById('qFb'); fb.className = 'q-fb'; fb.textContent = '';
+  const next = document.getElementById('qNext');
+  next.disabled = true;
+  next.textContent = cur < Qs.length - 1 ? 'Next question →' : 'See results';
+  buildTrack();
+}
+
+function pick(i, btn) {
+  if (answered) return;
+  answered = true;
+  const q = Qs[cur];
+  document.querySelectorAll('.q-opt').forEach(b => b.disabled = true);
+  const fb = document.getElementById('qFb');
+  if (i === q.ans) {
+    score++; btn.classList.add('correct');
+    fb.textContent = '✓ Correct. ' + q.why;
+    fb.className = 'q-fb show ok';
+  } else {
+    mistakes.push(cur); btn.classList.add('wrong');
+    document.querySelectorAll('.q-opt')[q.ans].classList.add('correct');
+    fb.textContent = '✗ Not quite. ' + q.why;
+    fb.className = 'q-fb show err';
+  }
+  document.getElementById('qNext').disabled = false;
+}
+
+function nextQ() {
+  cur++;
+  if (cur >= Qs.length) showResult(); else loadQ();
+}
+
+function showResult() {
+  document.getElementById('quizActive').style.display = 'none';
+  const panel = document.getElementById('quizResult'); panel.classList.add('show');
+  document.getElementById('rScore').innerHTML = `${score}<sup>/${Qs.length}</sup>`;
+  const lbls = ['Needs work','Getting there','Solid foundation','Strong knowledge','Excellent'];
+  const msgs = [
+    'Review the tips section — especially phishing and personal privacy.',
+    'A good start. Re-read the threats section to reinforce the areas you missed.',
+    'You know the fundamentals. Explore the resources section to go deeper.',
+    'Strong cybersecurity instincts. Consider sharing this resource with others.',
+    'Perfect score. You\'re well-prepared for the digital world.'
+  ];
+  document.getElementById('rLbl').textContent = lbls[score];
+  document.getElementById('rMsg').textContent = msgs[score];
+  buildTrack();
+}
+
+function restartQ() {
+  cur = 0; score = 0; mistakes = [];
+  document.getElementById('quizActive').style.display = '';
+  document.getElementById('quizResult').classList.remove('show');
+  loadQ();
+}
+
+loadQ();
+</script>
+</body>
+</html>
